@@ -49,5 +49,7 @@ void Gpio_Reset_Output_Pin(uint32_t port, uint32_t pinMask);
 
 uint32_t Gpio_Is_Input_Pin_Set(uint32_t port, uint32_t pinMask);
 
+__attribute__((weak)) void Exti_0_Callback(void);
+
 
 #endif //YS_EXERCISE_WEEK3_GPIO_SUBSYSTEM_H
