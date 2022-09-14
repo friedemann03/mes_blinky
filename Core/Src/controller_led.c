@@ -2,9 +2,12 @@
 // Created by Friedemann Drepper on 14.09.22.
 //
 
-#include "module_led.h"
+#include "controller_led.h"
 #include "stdbool.h"
 #include "main.h"
+
+#define NR_OF_LEDS 4
+
 
 static volatile bool enabled = false;
 static volatile uint8_t loop = 0;
@@ -23,6 +26,7 @@ void Led_Module_DeInit(void) {
 void Exti_0_Callback(void) {
     if (enabled) {
         enabled = false;
+        Gpio_Reset_Output_Pin(led_ports[loop], led_pins[loop]); // turn off currently active LED
     } else {
         enabled = true;
     }
@@ -30,8 +34,7 @@ void Exti_0_Callback(void) {
 }
 
 void Tim_10_Callback(void) {
-    Gpio_Set_Output_Pin(led_ports[loop], led_pins[loop]);
-    LL_mDelay(70);
     Gpio_Reset_Output_Pin(led_ports[loop], led_pins[loop]);
-    loop = (loop + 1) % 4;
+    loop = (loop + 1) % NR_OF_LEDS;
+    Gpio_Set_Output_Pin(led_ports[loop], led_pins[loop]);
 }
