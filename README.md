@@ -18,8 +18,8 @@ processor manual, don’t worry about initialization.)
 - [x] Implement subsystem for GPIO and change program accordingly
 - [x] Use Timer to drive LEDs
 - [x] Implement subsystem for Timers and change program accordingly
-- [x] Create LED Module and move program into it so main loop does nothing
-- [ ] Add Logging Capability
+- [x] Create LED Controller and move program into it so main loop does nothing
+- [ ] Add Logging Module
 - [ ] Add Logging to LED module and subsystems
 - [ ] Answer questions from the exercise
 - [ ] Add software debouncing to button
