@@ -16,4 +16,7 @@
 #define LED6_Pin Gpio_Pin_15
 #define LED6_GPIO_Port Gpio_Port_D
 
+#define USER_BTN_Pin Gpio_Pin_0
+#define USER_BTN_GPIO_Port Gpio_Port_A
+
 #endif //YS_EXERCISE_WEEK3_PINOUT_H
