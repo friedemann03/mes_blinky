@@ -19,6 +19,7 @@
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 #include "tim.h"
+#include "usart.h"
 #include "gpio.h"
 
 /* Private includes ----------------------------------------------------------*/
@@ -72,11 +73,7 @@ int main(void)
   /* MCU Configuration--------------------------------------------------------*/
 
   /* Reset of all peripherals, Initializes the Flash interface and the Systick. */
-  LL_APB2_GRP1_EnableClock(LL_APB2_GRP1_PERIPH_SYSCFG);
-  LL_APB1_GRP1_EnableClock(LL_APB1_GRP1_PERIPH_PWR);
-
-  /* System interrupt init*/
-  NVIC_SetPriorityGrouping(NVIC_PRIORITYGROUP_0);
+  HAL_Init();
 
   /* USER CODE BEGIN Init */
 
@@ -91,6 +88,7 @@ int main(void)
 
   /* Initialize all configured peripherals */
 
+  MX_USART2_UART_Init();
   /* USER CODE BEGIN 2 */
   Gpio_Subsystem_Init();
   Tim_Subsystem_Init();
@@ -147,8 +145,13 @@ void SystemClock_Config(void)
   {
 
   }
-  LL_Init1msTick(96000000);
   LL_SetSystemCoreClock(96000000);
+
+   /* Update the time base */
+  if (HAL_InitTick (TICK_INT_PRIORITY) != HAL_OK)
+  {
+    Error_Handler();
+  }
   LL_RCC_SetTIMPrescaler(LL_RCC_TIM_PRESCALER_TWICE);
 }
 
