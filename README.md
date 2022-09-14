@@ -19,11 +19,11 @@ processor manual, don’t worry about initialization.)
 - [x] Use Timer to drive LEDs
 - [x] Implement subsystem for Timers and change program accordingly
 - [x] Create LED Module and move program into it so main loop does nothing
-- [] Add Logging Capability
-- [] Add Logging to LED module and subsystems
-- [] Answer questions from the exercise
-- [] Add software debouncing to button
-- [] Add Console Module to have a terminal connection to the MCU
+- [ ] Add Logging Capability
+- [ ] Add Logging to LED module and subsystems
+- [ ] Answer questions from the exercise
+- [ ] Add software debouncing to button
+- [ ] Add Console Module to have a terminal connection to the MCU
 
 ## Answers to questions from the exercise
 not done yet
