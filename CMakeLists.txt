@@ -49,11 +49,11 @@ else ()
     add_compile_options(-Og -g)
 endif ()
 
-include_directories(Core/Inc USB_HOST/App USB_HOST/Target Drivers/STM32F4xx_HAL_Driver/Inc Drivers/STM32F4xx_HAL_Driver/Inc/Legacy Middlewares/ST/STM32_USB_Host_Library/Core/Inc Middlewares/ST/STM32_USB_Host_Library/Class/CDC/Inc Drivers/CMSIS/Device/ST/STM32F4xx/Include Drivers/CMSIS/Include)
+include_directories(Core/Inc Drivers/STM32F4xx_HAL_Driver/Inc Drivers/CMSIS/Device/ST/STM32F4xx/Include Drivers/CMSIS/Include)
 
-add_definitions(-DDEBUG -DUSE_FULL_LL_DRIVER -DUSE_HAL_DRIVER -DSTM32F411xE)
+add_definitions(-DDEBUG -DUSE_FULL_LL_DRIVER -DSTM32F411xE -DUSE_FULL_ASSERT=1U -DHSE_VALUE=8000000 -DHSE_STARTUP_TIMEOUT=100 -DLSE_STARTUP_TIMEOUT=5000 -DLSE_VALUE=32768 -DEXTERNAL_CLOCK_VALUE=12288000 -DHSI_VALUE=16000000 -DLSI_VALUE=32000 -DVDD_VALUE=3300 -DPREFETCH_ENABLE=1 -DINSTRUCTION_CACHE_ENABLE=1 -DDATA_CACHE_ENABLE=1)
 
-file(GLOB_RECURSE SOURCES "USB_HOST/*.*" "Core/*.*" "Middlewares/*.*" "Drivers/*.*")
+file(GLOB_RECURSE SOURCES "Core/*.*" "Drivers/*.*")
 
 set(LINKER_SCRIPT ${CMAKE_SOURCE_DIR}/STM32F411VETX_FLASH.ld)
 

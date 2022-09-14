@@ -18,10 +18,6 @@
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
-#include "i2c.h"
-#include "i2s.h"
-#include "spi.h"
-#include "usb_host.h"
 #include "gpio.h"
 
 /* Private includes ----------------------------------------------------------*/
@@ -51,9 +47,6 @@
 
 /* Private function prototypes -----------------------------------------------*/
 void SystemClock_Config(void);
-void PeriphCommonClock_Config(void);
-void MX_USB_HOST_Process(void);
-
 /* USER CODE BEGIN PFP */
 
 /* USER CODE END PFP */
@@ -76,7 +69,11 @@ int main(void)
   /* MCU Configuration--------------------------------------------------------*/
 
   /* Reset of all peripherals, Initializes the Flash interface and the Systick. */
-  HAL_Init();
+  LL_APB2_GRP1_EnableClock(LL_APB2_GRP1_PERIPH_SYSCFG);
+  LL_APB1_GRP1_EnableClock(LL_APB1_GRP1_PERIPH_PWR);
+
+  /* System interrupt init*/
+  NVIC_SetPriorityGrouping(NVIC_PRIORITYGROUP_0);
 
   /* USER CODE BEGIN Init */
 
@@ -85,20 +82,12 @@ int main(void)
   /* Configure the system clock */
   SystemClock_Config();
 
-/* Configure the peripherals common clocks */
-  PeriphCommonClock_Config();
-
   /* USER CODE BEGIN SysInit */
 
   /* USER CODE END SysInit */
 
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
-  MX_I2C1_Init();
-  MX_I2S2_Init();
-  MX_I2S3_Init();
-  MX_SPI1_Init();
-  MX_USB_HOST_Init();
   /* USER CODE BEGIN 2 */
 
   /* USER CODE END 2 */
@@ -108,7 +97,6 @@ int main(void)
   while (1)
   {
     /* USER CODE END WHILE */
-    MX_USB_HOST_Process();
 
     /* USER CODE BEGIN 3 */
   }
@@ -134,7 +122,6 @@ void SystemClock_Config(void)
 
   }
   LL_RCC_PLL_ConfigDomain_SYS(LL_RCC_PLLSOURCE_HSE, LL_RCC_PLLM_DIV_4, 192, LL_RCC_PLLP_DIV_4);
-  LL_RCC_PLL_ConfigDomain_48M(LL_RCC_PLLSOURCE_HSE, LL_RCC_PLLM_DIV_4, 192, LL_RCC_PLLQ_DIV_8);
   LL_RCC_PLL_Enable();
 
    /* Wait till PLL is ready */
@@ -152,30 +139,9 @@ void SystemClock_Config(void)
   {
 
   }
+  LL_Init1msTick(96000000);
   LL_SetSystemCoreClock(96000000);
-
-   /* Update the time base */
-  if (HAL_InitTick (TICK_INT_PRIORITY) != HAL_OK)
-  {
-    Error_Handler();
-  }
   LL_RCC_SetTIMPrescaler(LL_RCC_TIM_PRESCALER_TWICE);
-}
-
-/**
-  * @brief Peripherals Common Clock Configuration
-  * @retval None
-  */
-void PeriphCommonClock_Config(void)
-{
-  LL_RCC_PLLI2S_ConfigDomain_I2S(LL_RCC_PLLSOURCE_HSE, LL_RCC_PLLI2SM_DIV_5, 200, LL_RCC_PLLI2SR_DIV_2);
-  LL_RCC_PLLI2S_Enable();
-
-   /* Wait till PLL is ready */
-  while(LL_RCC_PLLI2S_IsReady() != 1)
-  {
-
-  }
 }
 
 /* USER CODE BEGIN 4 */
