@@ -18,12 +18,13 @@
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
+#include "tim.h"
 #include "gpio.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "gpio_subsystem.h"
-
+#include "tim_subsystem.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -44,6 +45,9 @@
 
 /* USER CODE BEGIN PV */
 volatile bool enabled = false;
+volatile uint8_t loop = 0;
+uint32_t led_pins[] = {LED3_Pin, LED5_Pin, LED6_Pin, LED4_Pin};
+uint32_t led_ports[] = {LED3_GPIO_Port, LED5_GPIO_Port, LED6_GPIO_Port, LED4_GPIO_Port};
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -88,13 +92,17 @@ int main(void)
   /* USER CODE END SysInit */
 
   /* Initialize all configured peripherals */
+  MX_GPIO_Init();
+  MX_TIM10_Init();
   /* USER CODE BEGIN 2 */
   Gpio_Subsystem_Init();
+  Tim_Subsystem_Init();
+
+  Tim_EnableIRQ(true, TIMER_10);
+  Tim_Enable(true, TIMER_10);
 
 
-  volatile uint8_t loop = 0;
-  uint32_t led_pins[] = {LED3_Pin, LED5_Pin, LED6_Pin, LED4_Pin};
-  uint32_t led_ports[] = {LED3_GPIO_Port, LED5_GPIO_Port, LED6_GPIO_Port, LED4_GPIO_Port};
+
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -104,12 +112,7 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-      if (enabled) {
-          Gpio_Set_Output_Pin(led_ports[loop], led_pins[loop]);
-          LL_mDelay(70);
-          Gpio_Reset_Output_Pin(led_ports[loop], led_pins[loop]);
-          loop = (loop + 1) % 4;
-      }
+
   }
   /* USER CODE END 3 */
 }
@@ -163,6 +166,15 @@ void Exti_0_Callback(void) {
         enabled = true;
     }
 
+}
+
+void Tim_10_Callback(void) {
+    if (enabled) {
+        Gpio_Set_Output_Pin(led_ports[loop], led_pins[loop]);
+        LL_mDelay(70);
+        Gpio_Reset_Output_Pin(led_ports[loop], led_pins[loop]);
+        loop = (loop + 1) % 4;
+    }
 }
 /* USER CODE END 4 */
 
