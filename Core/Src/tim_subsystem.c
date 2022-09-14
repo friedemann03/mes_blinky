@@ -28,6 +28,7 @@ const uint32_t *timerMap[12] = {0, (uint32_t *) TIM1, (uint32_t *) TIM2,
 /* Function definitions ------------------------------------------------------*/
 void Tim_Subsystem_Init(void) {
     MX_TIM10_Init();
+    MX_TIM11_Init();
 }
 
 
