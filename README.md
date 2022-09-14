@@ -22,7 +22,7 @@ processor manual, don’t worry about initialization.)
 - [ ] Add Logging Module
 - [ ] Add Logging to LED module and subsystems
 - [ ] Answer questions from the exercise
-- [ ] Add software debouncing to button
+- [x] Add software debouncing to button
 - [ ] Add Console Module to have a terminal connection to the MCU
 
 ## Answers to questions from the exercise

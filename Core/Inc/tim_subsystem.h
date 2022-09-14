@@ -19,7 +19,7 @@
 //#define TIMER_8              8
 //#define TIMER_9              9
 #define TIMER_10             10
-//#define TIMER_11             11
+#define TIMER_11             11
 
 
 /* Exported types ------------------------------------------------------------*/
@@ -33,4 +33,7 @@ void Tim_Enable(bool status, uint32_t index);
 void Tim_EnableIRQ(bool status, uint32_t timerIRQn);
 
 __attribute__((weak)) void Tim_10_Callback(void);
+
+__attribute__((weak)) void Tim_11_Callback(void);
+
 #endif //YS_EXERCISE_WEEK3_TIM_SUBSYSTEM_H
