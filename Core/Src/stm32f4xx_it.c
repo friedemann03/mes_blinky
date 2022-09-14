@@ -24,6 +24,7 @@
 /* USER CODE BEGIN Includes */
 #include "gpio_subsystem.h"
 #include "tim_subsystem.h"
+#include "uart_subsystem.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -246,6 +247,7 @@ void USART2_IRQHandler(void)
 
   /* USER CODE END USART2_IRQn 0 */
   HAL_UART_IRQHandler(&huart2);
+  Uart_2_Callback(&huart2);
   /* USER CODE BEGIN USART2_IRQn 1 */
 
   /* USER CODE END USART2_IRQn 1 */
