@@ -89,7 +89,9 @@ int main(void)
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
   /* USER CODE BEGIN 2 */
-
+  volatile uint8_t loop = 0;
+  uint32_t led_pins[] = {LD3_Pin, LD5_Pin, LD6_Pin, LD4_Pin};
+  GPIO_TypeDef *led_ports[] = {LD3_GPIO_Port, LD5_GPIO_Port, LD6_GPIO_Port, LD4_GPIO_Port};
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -97,7 +99,10 @@ int main(void)
   while (1)
   {
     /* USER CODE END WHILE */
-
+      LL_GPIO_TogglePin(led_ports[loop], led_pins[loop]);
+      LL_mDelay(70);
+      LL_GPIO_TogglePin(led_ports[loop], led_pins[loop]);
+      loop = (loop + 1) % 4;
     /* USER CODE BEGIN 3 */
   }
   /* USER CODE END 3 */
