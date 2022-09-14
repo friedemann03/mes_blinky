@@ -18,10 +18,11 @@
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
-#include "gpio_subsystem.h"
+#include "gpio.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+#include "gpio_subsystem.h"
 
 /* USER CODE END Includes */
 
@@ -42,7 +43,7 @@
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
-
+volatile bool enabled = false;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -87,8 +88,10 @@ int main(void)
   /* USER CODE END SysInit */
 
   /* Initialize all configured peripherals */
-  Gpio_Subsystem_Init();
   /* USER CODE BEGIN 2 */
+  Gpio_Subsystem_Init();
+
+
   volatile uint8_t loop = 0;
   uint32_t led_pins[] = {LED3_Pin, LED5_Pin, LED6_Pin, LED4_Pin};
   uint32_t led_ports[] = {LED3_GPIO_Port, LED5_GPIO_Port, LED6_GPIO_Port, LED4_GPIO_Port};
@@ -99,11 +102,14 @@ int main(void)
   while (1)
   {
     /* USER CODE END WHILE */
-      Gpio_Set_Output_Pin(led_ports[loop], led_pins[loop]);
-      LL_mDelay(70);
-      Gpio_Reset_Output_Pin(led_ports[loop], led_pins[loop]);
-      loop = (loop + 1) % 4;
+
     /* USER CODE BEGIN 3 */
+      if (enabled) {
+          Gpio_Set_Output_Pin(led_ports[loop], led_pins[loop]);
+          LL_mDelay(70);
+          Gpio_Reset_Output_Pin(led_ports[loop], led_pins[loop]);
+          loop = (loop + 1) % 4;
+      }
   }
   /* USER CODE END 3 */
 }
@@ -150,7 +156,14 @@ void SystemClock_Config(void)
 }
 
 /* USER CODE BEGIN 4 */
+void Exti_0_Callback(void) {
+    if (enabled) {
+        enabled = false;
+    } else {
+        enabled = true;
+    }
 
+}
 /* USER CODE END 4 */
 
 /**
