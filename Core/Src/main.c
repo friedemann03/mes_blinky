@@ -18,7 +18,7 @@
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
-#include "gpio.h"
+#include "gpio_subsystem.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
@@ -87,11 +87,11 @@ int main(void)
   /* USER CODE END SysInit */
 
   /* Initialize all configured peripherals */
-  MX_GPIO_Init();
+  Gpio_Subsystem_Init();
   /* USER CODE BEGIN 2 */
   volatile uint8_t loop = 0;
-  uint32_t led_pins[] = {LD3_Pin, LD5_Pin, LD6_Pin, LD4_Pin};
-  GPIO_TypeDef *led_ports[] = {LD3_GPIO_Port, LD5_GPIO_Port, LD6_GPIO_Port, LD4_GPIO_Port};
+  uint32_t led_pins[] = {LED3_Pin, LED5_Pin, LED6_Pin, LED4_Pin};
+  uint32_t led_ports[] = {LED3_GPIO_Port, LED5_GPIO_Port, LED6_GPIO_Port, LED4_GPIO_Port};
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -99,9 +99,9 @@ int main(void)
   while (1)
   {
     /* USER CODE END WHILE */
-      LL_GPIO_TogglePin(led_ports[loop], led_pins[loop]);
+      Gpio_Set_Output_Pin(led_ports[loop], led_pins[loop]);
       LL_mDelay(70);
-      LL_GPIO_TogglePin(led_ports[loop], led_pins[loop]);
+      Gpio_Reset_Output_Pin(led_ports[loop], led_pins[loop]);
       loop = (loop + 1) % 4;
     /* USER CODE BEGIN 3 */
   }
