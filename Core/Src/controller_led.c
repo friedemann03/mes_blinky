@@ -39,7 +39,7 @@ void Tim_11_Callback(void) {
     volatile bool debounceEnabled = true;
 
     if (debounceCounter < DEBOUNCE_LOOPS) { // still debouncing
-        if (!Gpio_Is_Input_Pin_Set(USER_BTN_GPIO_Port, USER_BTN_Pin)) {
+        if (Gpio_Is_Input_Pin_Set(USER_BTN_GPIO_Port, USER_BTN_Pin)) {
             debounceCounter++;
         } else {
             debounceEnabled = false;
@@ -47,7 +47,7 @@ void Tim_11_Callback(void) {
     } else { // signal clear after debouncing
         if (ledEnabled) {
             ledEnabled = false;
-            Gpio_Reset_Output_Pin(led_ports[loop], led_pins[loop]); // turn off currently active LED
+            Gpio_Reset_Output_Pin(led_ports[0], led_pins[0]); // turn off currently active LED
         } else {
             ledEnabled = true;
         }
