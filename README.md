@@ -107,5 +107,5 @@ Using the STM32CubeIDE and the connected ST-LINK on the Nucleo board, it's reall
 ## Documents
 - [STM32F446 Reference Manual](https://www.st.com/resource/en/reference_manual/dm00135183-stm32f446xx-advanced-arm-based-32-bit-mcus-stmicroelectronics.pdf)
 - [STM32 Cortex-M4 Programming Manual](https://www.st.com/resource/en/programming_manual/pm0214-stm32-cortexm4-mcus-and-mpus-programming-manual-stmicroelectronics.pdf)
-- [Nucleo-F446RE Schematic](file:///Users/friedemann/Downloads/en.MB1136-DEFAULT-C05_Schematic.pdf)
+- [Nucleo-F446RE Schematic](https://www.st.com/resource/en/schematic_pack/mb1136-default-c05_schematic.pdf)
 - [Nucleo-F446RE Pinout](https://os.mbed.com/platforms/ST-Nucleo-F446RE/#nucleo-pinout)
