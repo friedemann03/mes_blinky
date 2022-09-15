@@ -23,16 +23,16 @@ void Log_Message(uint8_t logLevel, const char *sFormat, ...) {
                 sprintf(prefix ,"DEBUG   - ");
                 break;
             case LOG_LVL_INFO:
-                sprintf(prefix, "%sINFO    - %s", RTT_CTRL_TEXT_BRIGHT_GREEN, RTT_CTRL_RESET);
+                sprintf(prefix, "%sINFO    - %s", CTRL_TEXT_BRIGHT_GREEN, CTRL_RESET);
                 break;
             case LOG_LVL_WARNING:
-                sprintf(prefix, "%sWARNING - %s", RTT_CTRL_TEXT_BRIGHT_YELLOW, RTT_CTRL_RESET);
+                sprintf(prefix, "%sWARNING - %s", CTRL_TEXT_BRIGHT_YELLOW, CTRL_RESET);
                 break;
             case LOG_LVL_ERROR:
-                sprintf(prefix, "%sERROR   - %s", RTT_CTRL_TEXT_BRIGHT_RED, RTT_CTRL_RESET);
+                sprintf(prefix, "%sERROR   - %s", CTRL_TEXT_BRIGHT_RED, CTRL_RESET);
                 break;
             case LOG_LVL_SYSTEM:
-                sprintf(prefix, "%sSYSTEM  - %s", RTT_CTRL_TEXT_BRIGHT_BLUE, RTT_CTRL_RESET);
+                sprintf(prefix, "%sSYSTEM  - %s", CTRL_TEXT_BRIGHT_BLUE, CTRL_RESET);
                 break;
             default:
                 break;
