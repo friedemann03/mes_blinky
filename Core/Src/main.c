@@ -23,7 +23,6 @@
 /* USER CODE BEGIN Includes */
 #include "subsystem_tim.h"
 #include "subsystem_gpio.h"
-#include "subsystem_uart.h"
 #include "controller_led.h"
 /* USER CODE END Includes */
 
