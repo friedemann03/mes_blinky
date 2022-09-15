@@ -86,9 +86,11 @@ int main(void)
 
   /* Initialize all configured peripherals */
   /* USER CODE BEGIN 2 */
+  Log_Module_Init();
+
   Gpio_Subsystem_Init();
   Tim_Subsystem_Init();
-  Log_Module_Init();
+
 
   Led_Controller_Init();
   

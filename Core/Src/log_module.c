@@ -11,6 +11,7 @@
 void Log_Module_Init(void) {
     MX_USART2_UART_Init();
     RetargetInit(&huart2);
+    Log_Message(LOG_LVL_SYSTEM, "Log Module initialized.\n");
 }
 
 void Log_Message(uint8_t logLevel, const char *sFormat, ...) {

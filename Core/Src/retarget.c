@@ -22,7 +22,7 @@ void RetargetInit(UART_HandleTypeDef*huart){
 int _write(int fd,char *ptr,int len) {
     HAL_StatusTypeDef hstatus;
     if (fd == STDOUT_FILENO || fd == STDERR_FILENO) {
-        hstatus = HAL_UART_Transmit_IT(gHuart, (uint8_t *) ptr, len);
+        hstatus = HAL_UART_Transmit(gHuart, (uint8_t *) ptr, len, 100);
         if (hstatus == HAL_OK)
             return len;
         else
