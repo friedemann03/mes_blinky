@@ -29,6 +29,8 @@ Files I added or edited (all found in _Core/Inc_ or _Core/Src_):
 
 All other files are generated with STM32CubeMX, choosing the Nucleo-F446RE board with all default peripherals initialized.
 
+I used the retargeting example from Carmine Novellio's Book "Mastering STM - 2nd Edition" and removed unnecessary functionality.
+
 ## Todos
 - [x] Make simple blinking LED program
 - [x] Make slightly more complex LED program with Button in Interrupt Mode

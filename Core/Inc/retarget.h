@@ -1,6 +1,6 @@
-//
-// Created by Friedemann Drepper on 15.09.22.
-//
+// Taken from an example of Carmine Novellio's Book Mastering STM 2nd Edition.
+// All unnecessary functionality removed.
+// See the original: https://github.com/cnoviello/mastering-stm32/blob/master/nucleo-f446RE/system/include/retarget/retarget.h
 
 #ifndef YS_EXERCISE_WEEK3_RETARGET_H
 #define YS_EXERCISE_WEEK3_RETARGET_H
