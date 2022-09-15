@@ -3,10 +3,10 @@
 //
 
 /* Includes ------------------------------------------------------------------*/
-#include "tim_subsystem.h"
+#include "subsystem_tim.h"
 #include "stdbool.h"
 #include "tim.h"
-#include "gpio_subsystem.h"
+#include "subsystem_gpio.h"
 
 /* Private includes ----------------------------------------------------------*/
 
@@ -16,10 +16,12 @@
 /* Private macro -------------------------------------------------------------*/
 
 /* Private variables ---------------------------------------------------------*/
-const uint32_t *timerMap[12] = {0, (uint32_t *) TIM1, (uint32_t *) TIM2,
+const uint32_t *timerMap[15] = {0, (uint32_t *) TIM1, (uint32_t *) TIM2,
                                 (uint32_t *) TIM3, (uint32_t *) TIM4, (uint32_t *) TIM5,
-                                0,0,0,
-                                (uint32_t *) TIM9, (uint32_t *) TIM10, (uint32_t *) TIM11};
+                                (uint32_t *) TIM6,(uint32_t *) TIM7, (uint32_t *) TIM8,
+                                (uint32_t *) TIM9, (uint32_t *) TIM10, (uint32_t *) TIM11,
+                                (uint32_t *)TIM12, (uint32_t *) TIM13, (uint32_t *) TIM14,
+};
 
 /* Private function prototypes -----------------------------------------------*/
 
@@ -50,4 +52,4 @@ void Tim_EnableIRQ(bool status, uint32_t index) {
 
 
 
-#include "tim_subsystem.h"
+#include "subsystem_tim.h"

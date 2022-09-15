@@ -2,8 +2,8 @@
 // Created by Friedemann Drepper on 14.09.22.
 //
 
-#ifndef YS_EXERCISE_WEEK3_TIM_SUBSYSTEM_H
-#define YS_EXERCISE_WEEK3_TIM_SUBSYSTEM_H
+#ifndef YS_EXERCISE_WEEK3_SUBSYSTEM_TIM_H
+#define YS_EXERCISE_WEEK3_SUBSYSTEM_TIM_H
 /* Includes ------------------------------------------------------------------*/
 #include "stdint.h"
 #include "stdbool.h"
@@ -20,6 +20,9 @@
 //#define TIMER_9              9
 #define TIMER_10             10
 #define TIMER_11             11
+//#define TIMER_12             12
+//#define TIMER_13             13
+//#define TIMER_14             14
 
 
 /* Exported types ------------------------------------------------------------*/
@@ -36,4 +39,4 @@ __attribute__((weak)) void Tim_10_Callback(void);
 
 __attribute__((weak)) void Tim_11_Callback(void);
 
-#endif //YS_EXERCISE_WEEK3_TIM_SUBSYSTEM_H
+#endif //YS_EXERCISE_WEEK3_SUBSYSTEM_TIM_H

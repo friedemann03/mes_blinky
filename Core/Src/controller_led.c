@@ -5,34 +5,32 @@
 #include "controller_led.h"
 #include "stdbool.h"
 
-#define NR_OF_LEDS 4
-#define DEBOUNCE_LOOPS 30
+#define NR_OF_LEDS 1
+#define DEBOUNCE_LOOPS 25
 
 
 
 static volatile uint8_t loop = 0;
 
-static uint32_t led_pins[] = {LED3_Pin, LED5_Pin, LED6_Pin, LED4_Pin};
-static uint32_t led_ports[] = {LED3_GPIO_Port, LED5_GPIO_Port, LED6_GPIO_Port, LED4_GPIO_Port};
+static uint32_t led_pins[] = {LED2_Pin};
+static uint32_t led_ports[] = {LED2_GPIO_Port};
 
-void Led_Module_Init(void) {
+void Led_Controller_Init(void) {
     Tim_EnableIRQ(true, TIMER_10);
     Tim_EnableIRQ(true, TIMER_11);
     Tim_Enable(true, TIMER_10);
 }
 
-void Led_Module_DeInit(void) {
+void Led_Controller_DeInit(void) {
     Tim_EnableIRQ(false, TIMER_10);
 }
 
-void Exti_0_Callback(void) {
+void Exti_15_10_Callback(void) {
     Tim_Enable(true, TIMER_11);
 }
 
 void Tim_10_Callback(void) {
-    Gpio_Reset_Output_Pin(led_ports[loop], led_pins[loop]);
-    loop = (loop + 1) % NR_OF_LEDS;
-    Gpio_Set_Output_Pin(led_ports[loop], led_pins[loop]);
+    Gpio_Toggle_Output_Pin(led_ports[0], led_pins[0]);
 }
 
 void Tim_11_Callback(void) {

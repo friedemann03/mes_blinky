@@ -2,8 +2,8 @@
 // Created by Friedemann Drepper on 14.09.22.
 //
 
-#ifndef YS_EXERCISE_WEEK3_GPIO_SUBSYSTEM_H
-#define YS_EXERCISE_WEEK3_GPIO_SUBSYSTEM_H
+#ifndef YS_EXERCISE_WEEK3_SUBSYSTEM_GPIO_H
+#define YS_EXERCISE_WEEK3_SUBSYSTEM_GPIO_H
 
 /* Includes ------------------------------------------------------------------*/
 #include "stdint.h"
@@ -16,7 +16,9 @@
 #define Gpio_Port_C             2
 #define Gpio_Port_D             3
 #define Gpio_Port_E             4
-#define Gpio_Port_H             5
+#define Gpio_Port_F             5
+#define Gpio_Port_G             6
+#define Gpio_Port_H             7
 
 #define Gpio_Pin_0              (1 << 0)
 #define Gpio_Pin_1              (1 << 1)
@@ -51,7 +53,7 @@ void Gpio_Toggle_Output_Pin(uint32_t port, uint32_t pinMask);
 
 uint32_t Gpio_Is_Input_Pin_Set(uint32_t port, uint32_t pinMask);
 
-__attribute__((weak)) void Exti_0_Callback(void);
+__attribute__((weak)) void Exti_15_10_Callback(void);
 
 
-#endif //YS_EXERCISE_WEEK3_GPIO_SUBSYSTEM_H
+#endif //YS_EXERCISE_WEEK3_SUBSYSTEM_GPIO_H

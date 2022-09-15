@@ -3,7 +3,7 @@
 //
 
 /* Includes ------------------------------------------------------------------*/
-#include "gpio_subsystem.h"
+#include "subsystem_gpio.h"
 #include "gpio.h"
 
 /* Private includes ----------------------------------------------------------*/
@@ -15,11 +15,13 @@
 /* Private define ------------------------------------------------------------*/
 
 /* Private variables ---------------------------------------------------------*/
-static const GPIO_TypeDef *portMap[6] = {GPIOA,
+static const GPIO_TypeDef *portMap[8] = {GPIOA,
                                          GPIOB,
                                          GPIOC,
                                          GPIOD,
                                          GPIOE,
+                                         GPIOF,
+                                         GPIOG,
                                          GPIOH,
 };
 /* Private function prototypes -----------------------------------------------*/

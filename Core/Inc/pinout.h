@@ -5,18 +5,12 @@
 #ifndef YS_EXERCISE_WEEK3_PINOUT_H
 #define YS_EXERCISE_WEEK3_PINOUT_H
 
-#include "gpio_subsystem.h"
+#include "subsystem_gpio.h"
 
-#define LED4_Pin Gpio_Pin_12
-#define LED4_GPIO_Port Gpio_Port_D
-#define LED3_Pin Gpio_Pin_13
-#define LED3_GPIO_Port Gpio_Port_D
-#define LED5_Pin Gpio_Pin_14
-#define LED5_GPIO_Port Gpio_Port_D
-#define LED6_Pin Gpio_Pin_15
-#define LED6_GPIO_Port Gpio_Port_D
+#define LED2_Pin Gpio_Pin_5
+#define LED2_GPIO_Port Gpio_Port_A
 
-#define USER_BTN_Pin Gpio_Pin_0
-#define USER_BTN_GPIO_Port Gpio_Port_A
+#define USER_BTN_Pin Gpio_Pin_13
+#define USER_BTN_GPIO_Port Gpio_Port_C
 
 #endif //YS_EXERCISE_WEEK3_PINOUT_H

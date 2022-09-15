@@ -21,8 +21,9 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include "gpio_subsystem.h"
-#include "tim_subsystem.h"
+#include "subsystem_tim.h"
+#include "subsystem_gpio.h"
+#include "subsystem_uart.h"
 #include "controller_led.h"
 /* USER CODE END Includes */
 
@@ -88,8 +89,7 @@ int main(void)
   Gpio_Subsystem_Init();
   Tim_Subsystem_Init();
 
-  Led_Module_Init();
-
+  Led_Controller_Init();
   /* USER CODE END 2 */
 
   /* Infinite loop */
