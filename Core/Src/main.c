@@ -24,6 +24,7 @@
 #include "subsystem_tim.h"
 #include "subsystem_gpio.h"
 #include "controller_led.h"
+#include "log_module.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -87,8 +88,10 @@ int main(void)
   /* USER CODE BEGIN 2 */
   Gpio_Subsystem_Init();
   Tim_Subsystem_Init();
+  Log_Module_Init();
 
   Led_Controller_Init();
+  
   /* USER CODE END 2 */
 
   /* Infinite loop */
