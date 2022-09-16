@@ -12,19 +12,21 @@ processor manual, don’t worry about initialization.)
 3. Can you read the register directly and see the button change in a debugger or by
 4. printing out these value of the memory at the register’s address?
 
-## Information
+## Documentation
+
+### Overview
 I am using the Nucleo-F446RE board from STM. 
 My program lets the one LED on the Board blink with a Timer. 
 The LED can be turnt off by pressing the user button. 
 The Button also gets debounced in software by using another Timer.
 
-Files I added or edited (all found in _Core/Inc_ or _Core/Src_):
-- all subsystems
-- all controllers
-- pinout header
-- retargeting files to use printf
-- logging module
-- stm32f4xx_it interrupt handler file (i added IRQ handling and calls to callback functions)
+### Added or Edited files (all found in _Core/Inc_ or _Core/Src_):
+- all subsystems (_subsystem_gpio.c/h_, _subsystem_tim.c/h_)
+- all controllers (_controller_led.c/h_)
+- pinout header (_pinout.h_)
+- retargeting files to use printf _(retarget.c from Carmine Novellio's Book "Mastering STM32 - 2nd Edition")_
+- logging module (_log_module.c/h_, _log_module_ansi.h_)
+- _stm32f4xx_it.c_ interrupt handler file (i added IRQ handling and calls to callback functions)
 - i added calls to the subsystem and controller Init-Functions in the main function
 
 All other files are generated with STM32CubeMX, choosing the Nucleo-F446RE board with all default peripherals initialized.
@@ -43,22 +45,26 @@ I used the retargeting example from Carmine Novellio's Book "Mastering STM - 2nd
 - [x] Add Logging to LED controller and subsystems
 - [x] Answer questions from the exercise
 - [x] Add software debouncing to button
+- [ ] Add Unit Testing Capability with [Ceedling](https://github.com/ThrowTheSwitch/Ceedling) and [Unity](https://github.com/ThrowTheSwitch/Unity) Testing Framework
+- [ ] Add Unit Tests to LED Controller
+- [ ] Reorganize project structure with own CMake files
+- [ ] Implement and design UART Subsystem (maybe look into [lwrb](https://github.com/MaJerle/lwrb) library)
 - [ ] Add Console Module to have a terminal connection to the MCU (_maybe_)
 
 ## Answers to questions from the exercise
 
 ### 1. Question: Registers for the LED
 On the Nucleo-F446 the LED (LD2) is connected to PA5 (Pin 5 on Port A). 
-For Initialization of PA5 as Output you need to set the according bits in the _MODER_ (MODE Register).
+For Initialization of PA5 as Output you need to set the according bits in the __MODER__ (MODE Register).
 ```
 GPIOA->MODER |= (0x01 << 10);        // setting mode bits of pin 5 to 01 => Output mode
 ```
-To actually set the output of PA5 you need to set the according bit in the _ODR_ (Output Data Register).
+To actually set the output of PA5 you need to set the according bit in the __ODR__ (Output Data Register).
 ```
 GPIOA->ODR |= (1 << 5);              // setting bit
 GPIOA->ODR &= ~(1 << 5);             // resetting bit
 ```
-Because that is not possible to do as an atomic operation, there is the _BSRR_ (Bit Set Reset Register) which allow setting a Pin with an atomic instruction.
+Because that is not possible to do as an atomic operation, there is the __BSRR__ (Bit Set Reset Register) which allow setting a Pin with an atomic instruction.
 ```
 GPIOA->BSRR |= (1 << 5);             // setting bit
 GPIOA->BSRR |= ((1 << 5) << 16);     // resetting bit
@@ -66,26 +72,26 @@ GPIOA->BSRR |= ((1 << 5) << 16);     // resetting bit
 
 ### 2. Question: Registers for the Button
 The button is connected to PC13 (Pin 13 on Port C).
-To configure PC13 to be in interrupt Mode we need to set the pin mask in the _SYSCFG_EXTICR1_ 
+To configure PC13 to be in interrupt Mode we need to set the pin mask in the __SYSCFG_EXTICR1__ 
 (System Config External Interrupt Control Register 1 (CR1 contains the fields for EXTI0 - EXITI3)).
 ```
 SYSCFG->EXTICR[3] &= ~(0xf << 4);    // clearing all four bits for EXTI13
 SYSCFG->EXTICR[3] |= (0x2 << 4);     // setting EXTI13 Bits to 0b0010 => Port C
 ```
-Next, you need to unmask the pin in the _EXTI_IMRx_ (EXTI Interrupt Mask Register).
+Next, you need to unmask the pin in the __EXTI_IMRx__ (EXTI Interrupt Mask Register).
 ```
 EXTI->IMR |= (1 << 13);              // setting bit 13 to 1 => unmasking Interrupt
 ```
-I configured PC13 to fire an interrupt at falling edge, which is done inside the _EXTI_FTSRx_ 
+I configured PC13 to fire an interrupt at falling edge, which is done inside the __EXTI_FTSRx__ 
 (EXIT Falling Trigger Selection Register). Then you need to clear the opposite bit in the RTSR (Rising Trigger Selection Register)
 else the pin is configured to both, firing two interrupts per button press.
 ```
 EXTI->FTSR |= (1 << 13);             // enable Rising Edge Trigger
 EXTI->RTSR &= ~(1 << 13);            // disable Falling Edge Trigger
 ```
-You also have to enable the interrupt in the NVIC (but I do not want to get into the NVIC registers).
+You also have to enable the interrupt in the __NVIC__ (Nested Vector Interrupt Controller) (but I do not want to get into the NVIC registers).
 
-When an interrupt occurs you have to clear the pending bit in the _EXTI_PRx_ (EXTI Pending Register) from where you also get the 
+When an interrupt occurs you have to clear the pending bit in the __EXTI_PRx__ (EXTI Pending Register) from where you also get the 
 information on which pin on the line caused the interrupt.
 ```
 EXTI->PR |= (1 << 13);               // clear the interrupt flag by writing a 1 
@@ -95,7 +101,7 @@ If the button is used in polling mode, the pin needs to be configured as input i
 ```
 GPIOC->MODER |= (0x10 << 26);        // setting mode bits for pin 13 to 10 => Input mode
 ```
-To poll the pin then, you need to get the _IDR_ (Input Data Register) and use bitwise operation to get the information on PC13.
+To poll the pin then, you need to get the __IDR__ (Input Data Register) and use bitwise operation to get the information on PC13.
 ```
 uint8_t pinState = GPIOC->IDR & (1 << 13);     // getting value of bit 13 in input register
 ```
