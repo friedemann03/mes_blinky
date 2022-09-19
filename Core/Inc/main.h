@@ -57,7 +57,11 @@ extern "C" {
 
 /* Exported macro ------------------------------------------------------------*/
 /* USER CODE BEGIN EM */
-
+#ifdef UNIT_TESTS
+#define STATIC
+#else
+#define STATIC static
+#endif
 /* USER CODE END EM */
 
 /* Exported functions prototypes ---------------------------------------------*/
