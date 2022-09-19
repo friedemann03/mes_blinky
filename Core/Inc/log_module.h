@@ -5,7 +5,6 @@
 #ifndef YS_EXERCISE_WEEK3_LOG_MODULE_H
 #define YS_EXERCISE_WEEK3_LOG_MODULE_H
 
-#include "usart.h"
 #include "log_module_ansi.h"
 
 #define DEBUG_LOG_LEVEL LOG_LVL_DEBUG

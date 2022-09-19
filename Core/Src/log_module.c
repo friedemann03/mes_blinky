@@ -3,7 +3,7 @@
 //
 
 #include "log_module.h"
-
+#include "usart.h"
 #include "stdio.h"
 #include "stdarg.h"
 #include "retarget.h"
