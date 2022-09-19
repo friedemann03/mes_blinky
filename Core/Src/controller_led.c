@@ -10,7 +10,8 @@
 #define DEBOUNCE_LOOPS 25
 
 
-
+static volatile bool ledEnabled = true;
+static volatile bool buttonPressed = false;
 static volatile uint8_t loop = 0;
 
 static uint32_t led_pins[] = {LED2_Pin};
@@ -22,6 +23,19 @@ void Led_Controller_Init(void) {
     Tim_EnableIRQ(false, TIMER_11);
     Tim_Enable(true, TIMER_10);
     Tim_Enable(false, TIMER_11);
+}
+
+void Led_Controller_Update(void) {
+    if (buttonPressed) {
+        buttonPressed = false;
+        if (ledEnabled) {
+            ledEnabled = false;
+            Gpio_Reset_Output_Pin(led_ports[0], led_pins[0]); // turn off currently active LED
+        } else {
+            ledEnabled = true;
+        }
+        Tim_Enable(ledEnabled, TIMER_10);
+    }
 }
 
 void Led_Controller_DeInit(void) {
@@ -42,18 +56,8 @@ void Tim_11_Callback(void) {
     Tim_EnableIRQ(false, TIMER_11);
     Tim_Enable(false, TIMER_11);
 
-    static volatile bool ledEnabled = true;
-
     if (Gpio_Is_Input_Pin_Set(USER_BTN_GPIO_Port, USER_BTN_Pin)) {
 //        Log_Message(LOG_LVL_INFO, "Button pressed\n");
-        if (ledEnabled) {
-            ledEnabled = false;
-            Gpio_Reset_Output_Pin(led_ports[0], led_pins[0]); // turn off currently active LED
-        } else {
-            ledEnabled = true;
-        }
-        Tim_Enable(ledEnabled, TIMER_10);
+        buttonPressed = true;
     }
-
-
 }
