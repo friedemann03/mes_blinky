@@ -29,20 +29,23 @@ void Led_Controller_DeInit(void) {
 }
 
 void Exti_15_10_Callback(void) {
-    Log_Message(LOG_LVL_INFO, "Button pressed\n");
     Tim_EnableIRQ(true, TIMER_11);
     Tim_Enable(true, TIMER_11);
 }
 
 void Tim_10_Callback(void) {
     Gpio_Toggle_Output_Pin(led_ports[0], led_pins[0]);
-    Log_Message(LOG_LVL_INFO, "Toggle: Port A output register(ODR): %x\n", GPIOA->ODR);
+//    Log_Message(LOG_LVL_INFO, "Toggle: Port A output register(ODR): %x\n", GPIOA->ODR);
 }
 
 void Tim_11_Callback(void) {
-    static volatile bool ledEnabled = false;
+    Tim_EnableIRQ(false, TIMER_11);
+    Tim_Enable(false, TIMER_11);
+
+    static volatile bool ledEnabled = true;
 
     if (Gpio_Is_Input_Pin_Set(USER_BTN_GPIO_Port, USER_BTN_Pin)) {
+//        Log_Message(LOG_LVL_INFO, "Button pressed\n");
         if (ledEnabled) {
             ledEnabled = false;
             Gpio_Reset_Output_Pin(led_ports[0], led_pins[0]); // turn off currently active LED
@@ -52,6 +55,5 @@ void Tim_11_Callback(void) {
         Tim_Enable(ledEnabled, TIMER_10);
     }
 
-    Tim_EnableIRQ(false, TIMER_11);
-    Tim_Enable(false, TIMER_11);
+
 }
