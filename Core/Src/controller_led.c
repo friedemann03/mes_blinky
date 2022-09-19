@@ -9,11 +9,11 @@
 
 
 //Private Variables
-static volatile bool ledEnabled = true;
-static volatile bool buttonPressed = false;
+STATIC volatile bool ledEnabled = true;
+STATIC volatile bool buttonPressed = false;
 
-static uint32_t led_pins[] = {LED2_Pin};
-static uint32_t led_ports[] = {LED2_GPIO_Port};
+STATIC uint32_t led_pins[] = {LED2_Pin};
+STATIC uint32_t led_ports[] = {LED2_GPIO_Port};
 
 // Public Functions
 void Led_Controller_Init(void) {
