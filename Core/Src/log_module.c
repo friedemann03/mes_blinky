@@ -3,7 +3,7 @@
 //
 
 #include "log_module.h"
-
+#include "usart.h"
 #include "stdio.h"
 #include "stdarg.h"
 #include "retarget.h"
@@ -11,6 +11,8 @@
 void Log_Module_Init(void) {
     MX_USART2_UART_Init();
     RetargetInit(&huart2);
+    printf("\n");
+    Log_Message(LOG_LVL_SYSTEM, "=== BOARD RESET ===\n");
     Log_Message(LOG_LVL_SYSTEM, "Log Module initialized.\n");
 }
 

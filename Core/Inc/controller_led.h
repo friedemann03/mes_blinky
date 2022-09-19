@@ -7,9 +7,12 @@
 
 #include "subsystem_gpio.h"
 #include "subsystem_tim.h"
+#include "unit_testing.h"
 
 
 void Led_Controller_Init(void);
+
+void Led_Controller_Update(void);
 
 void Led_Controller_DeInit(void);
 
