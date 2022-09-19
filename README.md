@@ -27,7 +27,8 @@ The Button also gets debounced in software by using another Timer.
 - retargeting files to use printf _(retarget.c from Carmine Novellio's Book "Mastering STM32 - 2nd Edition")_
 - logging module (_log_module.c/h_, _log_module_ansi.h_)
 - _stm32f4xx_it.c_ interrupt handler file (i added IRQ handling and calls to callback functions)
-- i added calls to the subsystem and controller Init-Functions in the main function
+- I added calls to the subsystem and controller Init-Functions in the main function
+- all files in test/
 
 All other files are generated with STM32CubeMX, choosing the Nucleo-F446RE board with all default peripherals initialized.
 
@@ -45,8 +46,9 @@ I used the retargeting example from Carmine Novellio's Book "Mastering STM - 2nd
 - [x] Add Logging to LED controller and subsystems
 - [x] Answer questions from the exercise
 - [x] Add software debouncing to button
-- [ ] Add Unit Testing Capability with [Ceedling](https://github.com/ThrowTheSwitch/Ceedling) and [Unity](https://github.com/ThrowTheSwitch/Unity) Testing Framework
-- [ ] Add Unit Tests to LED Controller
+  - [x] fix debouncing method
+- [x] Add Unit Testing Capability with [Ceedling](https://github.com/ThrowTheSwitch/Ceedling) and [Unity](https://github.com/ThrowTheSwitch/Unity) Testing Framework
+- [x] Add Unit Tests to LED Controller
 - [ ] Reorganize project structure with own CMake files
 - [ ] Implement and design UART Subsystem (maybe look into [lwrb](https://github.com/MaJerle/lwrb) library)
 - [ ] Add Console Module to have a terminal connection to the MCU (_maybe_)
