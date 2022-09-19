@@ -19,7 +19,7 @@ static uint32_t led_ports[] = {LED2_GPIO_Port};
 void Led_Controller_Init(void) {
     Log_Message(LOG_LVL_SYSTEM, "LED Controller Starting.\n");
     Tim_EnableIRQ(true, TIMER_10);
-    Tim_EnableIRQ(true, TIMER_11);
+    Tim_EnableIRQ(false, TIMER_11);
     Tim_Enable(true, TIMER_10);
     Tim_Enable(false, TIMER_11);
 }
@@ -30,6 +30,7 @@ void Led_Controller_DeInit(void) {
 
 void Exti_15_10_Callback(void) {
     Log_Message(LOG_LVL_INFO, "Button pressed\n");
+    Tim_EnableIRQ(true, TIMER_11);
     Tim_Enable(true, TIMER_11);
 }
 
@@ -40,16 +41,8 @@ void Tim_10_Callback(void) {
 
 void Tim_11_Callback(void) {
     static volatile bool ledEnabled = false;
-    static volatile uint8_t debounceCounter = 0;
-    volatile bool debounceEnabled = true;
 
-    if (debounceCounter < DEBOUNCE_LOOPS) { // still debouncing
-        if (Gpio_Is_Input_Pin_Set(USER_BTN_GPIO_Port, USER_BTN_Pin)) {
-            debounceCounter++;
-        } else {
-            debounceEnabled = false;
-        }
-    } else { // signal clear after debouncing
+    if (Gpio_Is_Input_Pin_Set(USER_BTN_GPIO_Port, USER_BTN_Pin)) {
         if (ledEnabled) {
             ledEnabled = false;
             Gpio_Reset_Output_Pin(led_ports[0], led_pins[0]); // turn off currently active LED
@@ -57,7 +50,8 @@ void Tim_11_Callback(void) {
             ledEnabled = true;
         }
         Tim_Enable(ledEnabled, TIMER_10);
-        debounceEnabled = false;
     }
-    Tim_Enable(debounceEnabled, TIMER_11);
+
+    Tim_EnableIRQ(false, TIMER_11);
+    Tim_Enable(false, TIMER_11);
 }
