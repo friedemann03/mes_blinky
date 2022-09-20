@@ -48,7 +48,7 @@ else ()
     add_compile_options(-Og -g)
 endif ()
 
-include_directories(${includes} vendor/ceedling/vendor/unity/src vendor/ceedling/vendor/cmock/src)
+include_directories(${includes} vendor/ceedling/vendor/unity/src vendor/ceedling/vendor/cmock/src build_test/test/mocks/)
 
 add_definitions(${defines})
 
