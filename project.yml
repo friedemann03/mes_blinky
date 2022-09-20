@@ -51,12 +51,14 @@
     - -:test/support
   :source:
     - Core/Src/**
+    - src/**
   :support:
     - test/support
   :libraries: []
   :include:
     - Drivers/**
     - Core/Inc/**
+    - inc/**
 
 :defines:
   # in order to add common defines:
