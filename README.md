@@ -49,7 +49,7 @@ I used the retargeting example from Carmine Novellio's Book "Mastering STM - 2nd
   - [x] fix debouncing method
 - [x] Add Unit Testing Capability with [Ceedling](https://github.com/ThrowTheSwitch/Ceedling) and [Unity](https://github.com/ThrowTheSwitch/Unity) Testing Framework
 - [x] Add Unit Tests to LED Controller
-- [ ] Reorganize project structure with own CMake files
+- [x] Reorganize project structure with own CMake files
 - [ ] Implement and design UART Subsystem (maybe look into [lwrb](https://github.com/MaJerle/lwrb) library)
 - [ ] Add Console Module to have a terminal connection to the MCU (_maybe_)
 
