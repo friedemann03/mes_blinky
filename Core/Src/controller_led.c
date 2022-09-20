@@ -11,6 +11,7 @@
 //Private Variables
 STATIC volatile bool ledEnabled = true;
 STATIC volatile bool buttonPressed = false;
+STATIC volatile bool buttonDebounced = false;
 
 STATIC uint32_t led_pins[] = {LED2_Pin};
 STATIC uint32_t led_ports[] = {LED2_GPIO_Port};
@@ -26,13 +27,25 @@ void Led_Controller_Init(void) {
 
 void Led_Controller_Update(void) {
     if (buttonPressed) {
+        Tim_EnableIRQ(false, TIMER_11);
+        Tim_Enable(false, TIMER_11);
+
         buttonPressed = false;
-        if (ledEnabled) {
-            ledEnabled = false;
-            Gpio_Reset_Output_Pin(led_ports[0], led_pins[0]); // turn off currently active LED
-        } else {
-            ledEnabled = true;
+
+        if (Gpio_Is_Input_Pin_Set(USER_BTN_GPIO_Port, USER_BTN_Pin)) {
+            buttonDebounced = true;
         }
+    }
+
+    if (buttonDebounced) {
+        buttonDebounced = false;
+
+        if (ledEnabled) {
+            Gpio_Reset_Output_Pin(led_ports[0], led_pins[0]); // turn off currently active LED
+        }
+
+        ledEnabled = !ledEnabled;
+
         Tim_Enable(ledEnabled, TIMER_10);
     }
 }
@@ -57,10 +70,5 @@ void Tim_10_Callback(void) {
 }
 
 void Tim_11_Callback(void) {
-    Tim_EnableIRQ(false, TIMER_11);
-    Tim_Enable(false, TIMER_11);
-
-    if (Gpio_Is_Input_Pin_Set(USER_BTN_GPIO_Port, USER_BTN_Pin)) {
-        buttonPressed = true;
-    }
+    buttonPressed = true;
 }
