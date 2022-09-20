@@ -24,7 +24,7 @@ My program lets the one LED on the Board blink with a Timer.
 The LED can be turned off by pressing the user button. 
 The button also gets debounced in software by using another Timer.
 
-### Added or Edited files (all found in _Core/Inc_ or _Core/Src_):
+### Added or Edited Files:
 - all files in _src/_ and _inc/_
 - all files in _test/_
 - _stm32f4xx_it.c_ interrupt handler file (I added IRQ handling and calls to callback functions)
