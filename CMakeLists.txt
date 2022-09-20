@@ -14,7 +14,7 @@ set(SIZE arm-none-eabi-size)
 set(CMAKE_TRY_COMPILE_TARGET_TYPE STATIC_LIBRARY)
 
 # project settings
-project(ys-exercise-week3 C CXX ASM)
+project(mes_blinky C CXX ASM)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_C_STANDARD 11)
 
@@ -49,11 +49,46 @@ else ()
     add_compile_options(-Og -g)
 endif ()
 
-include_directories(Core/Inc Drivers/STM32F4xx_HAL_Driver/Inc Drivers/STM32F4xx_HAL_Driver/Inc/Legacy Drivers/CMSIS/Device/ST/STM32F4xx/Include Drivers/CMSIS/Include vendor/ceedling/vendor/unity/src vendor/ceedling/vendor/cmock/src build_test/test/mocks/)
+list(APPEND SOURCES
+        src/controller_led.c
+        src/subsystem_tim.c
+        src/subsystem_gpio.c
+        src/retarget.c
+        src/log_module.c
+        Core/Src/main.c
+        Core/Src/gpio.c
+        Core/Src/tim.c
+        Core/Src/usart.c
+        Core/Src/syscalls.c
+        Core/Src/sysmem.c
+        Core/Src/system_stm32f4xx.c
+        Core/Src/stm32f4xx_hal_msp.c
+        Core/Src/stm32f4xx_it.c
+        )
+
+include_directories(
+        inc
+        Core/Inc
+        Drivers/STM32F4xx_HAL_Driver/Inc
+        Drivers/STM32F4xx_HAL_Driver/Inc/Legacy
+        Drivers/CMSIS/Device/ST/STM32F4xx/Include
+        Drivers/CMSIS/Include
+        )
+
+# Includes for code completion in Unit Tests
+include_directories(
+        vendor/ceedling/vendor/unity/src
+        vendor/ceedling/vendor/cmock/src
+        build_test/test/mocks
+)
 
 add_definitions(-DDEBUG -DUSE_FULL_LL_DRIVER -DUSE_HAL_DRIVER -DSTM32F446xx)
 
-file(GLOB_RECURSE SOURCES "Core/*.*" "Drivers/*.*" vendor/ceedling/vendor/unity/src vendor/ceedling/vendor/cmock/src)
+file(GLOB_RECURSE SOURCES
+        "src/*.*"
+        "Core/*.*"
+        "Drivers/*.*"
+        )
 
 set(LINKER_SCRIPT ${CMAKE_SOURCE_DIR}/STM32F446RETX_FLASH.ld)
 
