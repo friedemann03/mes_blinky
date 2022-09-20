@@ -1,38 +1,38 @@
-# Week 3 Exercise
+# Making Embedded Systems: Exercise 3 - Blinky
+
+This project was done as an exercise inside the Making Embedded Systems Course by Elecia White (Aug 2022 / Yellow Seahorses Cohort).
 
 ## Exercise:
-On your final project board, make blinky for yourself. Then add a button to turn the LED on and
+> On your final project board, make blinky for yourself. Then add a button to turn the LED on and
 off. Bonus points for making the button cause an interrupt. Triple bonus points for debouncing
 the button signal.
-
-Investigate further, using the processor manual:
-1. What are the hardware registers that cause the LED to turn on and off? (From the
+> 
+> Investigate further, using the processor manual:
+> 1. What are the hardware registers that cause the LED to turn on and off? (From the
 processor manual, don’t worry about initialization.)
-2. What are the registers that you read in order to find out the state of the button?
-3. Can you read the register directly and see the button change in a debugger or by
-4. printing out these value of the memory at the register’s address?
+> 2. What are the registers that you read in order to find out the state of the button?
+> 3. Can you read the register directly and see the button change in a debugger or by
+> 4. printing out these value of the memory at the register’s address?
+
+[Answers to questions](https://github.com/friedemann03/mes_blinky#answers-to-questions-from-the-exercise)
 
 ## Documentation
 
 ### Overview
-I am using the Nucleo-F446RE board from STM. 
+I am using the Nucleo-F446RE board from ST Microelectronics. 
 My program lets the one LED on the Board blink with a Timer. 
-The LED can be turnt off by pressing the user button. 
-The Button also gets debounced in software by using another Timer.
+The LED can be turned off by pressing the user button. 
+The button also gets debounced in software by using another Timer.
 
 ### Added or Edited files (all found in _Core/Inc_ or _Core/Src_):
-- all subsystems (_subsystem_gpio.c/h_, _subsystem_tim.c/h_)
-- all controllers (_controller_led.c/h_)
-- pinout header (_pinout.h_)
-- retargeting files to use printf _(retarget.c from Carmine Novellio's Book "Mastering STM32 - 2nd Edition")_
-- logging module (_log_module.c/h_, _log_module_ansi.h_)
-- _stm32f4xx_it.c_ interrupt handler file (i added IRQ handling and calls to callback functions)
-- I added calls to the subsystem and controller Init-Functions in the main function
-- all files in test/
+- all files in _src/_ and _inc/_
+- all files in _test/_
+- _stm32f4xx_it.c_ interrupt handler file (I added IRQ handling and calls to callback functions)
+- _main.c_ main file (I added calls to subsystem and module inits, as well as led controller update in main loop)
 
 All other files are generated with STM32CubeMX, choosing the Nucleo-F446RE board with all default peripherals initialized.
 
-I used the retargeting example from Carmine Novellio's Book "Mastering STM - 2nd Edition" and removed unnecessary functionality.
+I used the IO retargeting example from Carmine Novellio's Book [Mastering STM32](https://leanpub.com/mastering-stm32) and removed unnecessary functionality.
 
 ## Todos
 - [x] Make simple blinking LED program
@@ -52,6 +52,13 @@ I used the retargeting example from Carmine Novellio's Book "Mastering STM - 2nd
 - [x] Reorganize project structure with own CMake files
 - [ ] Implement and design UART Subsystem (maybe look into [lwrb](https://github.com/MaJerle/lwrb) library)
 - [ ] Add Console Module to have a terminal connection to the MCU (_maybe_)
+
+### Detailed Program Description
+The led timer triggers an Interrupt at 2Hz which toggles the LED, making it blink once a second.
+If the User presses the button (upon release) the debounce timer is started, 
+which triggers an interrupt after 20ms. 
+If the button state is the same (released), it will disable the led timer if it was enabled and enable
+it if it was disabled. So it toggles the led blinking.
 
 ## Answers to questions from the exercise
 
